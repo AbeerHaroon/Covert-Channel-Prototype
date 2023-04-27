@@ -3,6 +3,8 @@ Scapy - Packet manipulation and communication
 Textual - Library for Terminal application UI
 pycrypto - Library for Cryptographic Functions 
 
+repo token - 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
+
 rough test log
 ------------------
 module: sessionKeyGen
