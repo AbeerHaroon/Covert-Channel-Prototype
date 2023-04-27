@@ -7,12 +7,22 @@ import io
 import codecs
 import base64 
 from Crypto.Cipher import AES
-from Crypto.Util import *
+from Crypto.Util import Padding
 
-PRIV_KEY = b'101169589151901239481463553995531949255'
 PRIV_KEY_SIXTEEN = b'i\x99\xa94Q\xdcE\xa4\x9c\xf0\xc4\x95\x17um\x94'
 IV_SIXTEEN = b'\xb6\xfeiW\x12[\xee\xa3q\x8d\xefZ\xc0\r\xcan'
 FILENAME = "msg.txt" #file name which contains our plain text
+
+def readAll():
+    with open(FILENAME,"r",encoding="ascii") as f:
+        d = f.read()
+        return d
+
+def encryptFull(str_msg):    
+    cipher = AES.new(key=PRIV_KEY_SIXTEEN, mode=AES.MODE_ECB)
+    msgBytes = str_msg.encode()
+    encrypted = cipher.encrypt(Padding.pad(msgBytes,AES.block_size)) 
+    return encrypted #return byte string
 
 #returns list of string
 def readFile():
@@ -62,7 +72,7 @@ def encryptMessage(paramByteList):
 
 #main function of this module
 #return the cipher text as a list
-def getCipher():
+def getCipher_individual():
     plainText = readFile() #list of strings
     plain_bytes = strToBytes(plainText)
     cipherText = encryptMessage(plain_bytes)
