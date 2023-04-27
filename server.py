@@ -4,6 +4,7 @@
 
 import sys
 import socket
+import base64
 
 from scapy.all import *
 
@@ -13,6 +14,7 @@ from Crypto.Util import *
 PRIV_KEY_SIXTEEN = b'i\x99\xa94Q\xdcE\xa4\x9c\xf0\xc4\x95\x17um\x94'
 IV_SIXTEEN = b'\xb6\xfeiW\x12[\xee\xa3q\x8d\xefZ\xc0\r\xcan'
 PORT = 5000
+PACKETNUM = 1
 
 #file_output = open("output.txt", "w", encoding="ascii")
 
@@ -43,11 +45,15 @@ if "-p" in sys.argv:
     PORT = int(sys.argv[3])
 
 def e_mode_handler(p):
-    d = p[Raw].load
     cipher = AES.new(key=PRIV_KEY_SIXTEEN, mode=AES.MODE_ECB)
-    dec = Padding.unpad(cipher.decrypt(d),AES.block_size)
-    #decrypted = cipher.decrypt(Padding.pad(d,AES.block_size))
-    s = dec.decode()
+    d = p[Raw].load #get bytes string object
+    d1 = base64.b64decode(d)
+
+    Padding.unpad(padded_data=d1,block_size=AES.block_size)
+    #print(d.decode())
+    #dec = Padding.unpad(cipher.decrypt(d),AES.block_size)
+    decrypted = cipher.decrypt(d)
+    s = decrypted.decode()
     f = open("output_aes.txt", "w")
     f.write(s)
     f.close()
@@ -58,6 +64,7 @@ def packet_handler(p):
     f = open("output.txt", "a", encoding="ascii")
     f.write(c)
     f.close()
+
 
 
 
