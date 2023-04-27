@@ -47,15 +47,15 @@ if "-p" in sys.argv:
 def e_mode_handler(p):
     cipher = AES.new(key=PRIV_KEY_SIXTEEN, mode=AES.MODE_ECB)
     d = p[Raw].load #get bytes string object
-    d1 = base64.b64decode(d)
+    d_64 = base64.b64encode(d)
 
-    Padding.unpad(padded_data=d1,block_size=AES.block_size)
+    d_64_unpad = Padding.unpad(padded_data=d_64,block_size=AES.block_size)
     #print(d.decode())
     #dec = Padding.unpad(cipher.decrypt(d),AES.block_size)
-    decrypted = cipher.decrypt(d)
-    s = decrypted.decode()
+    decrypted = cipher.decrypt(d_64_unpad)
+    #s = decrypted.decode()
     f = open("output_aes.txt", "w")
-    f.write(s)
+    f.write(decrypted)
     f.close()
 
 def packet_handler(p):
