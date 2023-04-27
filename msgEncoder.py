@@ -14,14 +14,18 @@ IV_SIXTEEN = b'\xb6\xfeiW\x12[\xee\xa3q\x8d\xefZ\xc0\r\xcan'
 FILENAME = "msg.txt" #file name which contains our plain text
 
 def readAll():
-    with open(FILENAME,"r",encoding="ascii") as f:
+    with open(FILENAME,"r",encoding="utf-8") as f:
         d = f.read()
         return d
 
+#str_msg is the whole text
 def encryptFull(str_msg):    
     cipher = AES.new(key=PRIV_KEY_SIXTEEN, mode=AES.MODE_ECB)
-    msgBytes = str_msg.encode()
+    msgBytes = base64.b64encode(str_msg.encode())
+    #msgBytes = base64.b64encode(str_msg.encode())
+    #encrypted = cipher.encrypt(Padding.pad(msgBytes,AES.block_size)) 
     encrypted = cipher.encrypt(Padding.pad(msgBytes,AES.block_size)) 
+    #encrypted = cipher.encrypt(msgBytes) 
     return encrypted #return byte string
 
 #returns list of string

