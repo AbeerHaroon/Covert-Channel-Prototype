@@ -10,11 +10,13 @@ from Crypto.Util import *
 import msgEncoder
 import sessionKeyGen
 
+dst_ip="192.168.1.83"
+ 
 #first method
 #id property in IP() packet can carry 16 bits according to RFC
 #first method, insert encrypted information into the id property of IP() layer in a UDP packet
 #packets are made IP()/UDP() thanks to scapy
-sample_pkt = IP(id=ord("H"),dst="192.168.1.88")/UDP(dport=5000)
+sample_pkt = IP(id=ord("H"),dst=dst_ip)/UDP(dport=5000)
 print(sample_pkt[IP].id, "port: ",sample_pkt[UDP].dport)
 send(sample_pkt)
 
