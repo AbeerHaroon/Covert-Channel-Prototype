@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #standard python modules
 import sys
 

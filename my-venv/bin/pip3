@@ -1,4 +1,4 @@
-#!/home/abeerharoon/btech/courses/apr2023/comp8505/assignments/assn1/Source/my-venv/bin/python3
+#!/home/abrfedoralenovo/bcit/courses/comp8505/assignments/assn1/source/8505_assn_1/my-venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
